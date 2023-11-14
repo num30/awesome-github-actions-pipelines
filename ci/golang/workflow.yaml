@@ -21,9 +21,22 @@ jobs:
     - name: Test
       run:  go test -v ./... -coverprofile="coverage.out"
     
-    - name: golangci-lint
+    - name: Lint
       uses: golangci/golangci-lint-action@v3.1.0
       with:
         working-directory: ${{ inputs.working-directory }}
+
+    - name: Security and vulnerability analysis (CodeQL)
+      uses: github/codeql-action/analyze@v2
+
+    - name: Cache the CodeQL database
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/codeql
+        key: codeql-db-${{ github.ref }}-${{ github.sha }}
+        restore-keys: |
+          codeql-db-${{ github.ref }}-
+          codeql-db-
+
 
     
