@@ -14,6 +14,14 @@ jobs:
       with:
         go-version: 1.21
 
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/go/pkg/mod # This will cache the Go modules
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
     - name: Build
       run:  go build -v ./...
 
