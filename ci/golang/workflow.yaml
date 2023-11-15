@@ -4,7 +4,7 @@ on: [push, workflow_call]
 
 jobs:
   ci:
-    name: ci
+    name: Test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -29,21 +29,16 @@ jobs:
       run:  go test -v ./... -coverprofile="coverage.out"
     
     - name: Lint
-      uses: golangci/golangci-lint-action@v3.1.0
-      with:
-        working-directory: ${{ inputs.working-directory }}
+      uses: golangci/golangci-lint-action@v3.1.0      
 
-    - name: Security and vulnerability analysis (CodeQL)
-      uses: github/codeql-action/analyze@v2
-
-    - name: Cache the CodeQL database
-      uses: actions/cache@v3
+    - name: Gosec Security Scanner
+      run:  go install github.com/securego/gosec/v2/cmd/gosec@latest && gosec ./...
+    
+    - id: govulncheck # vulnerability check from go team https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck
+      uses: golang/govulncheck-action@v1
       with:
-        path: ~/.cache/codeql
-        key: codeql-db-${{ github.ref }}-${{ github.sha }}
-        restore-keys: |
-          codeql-db-${{ github.ref }}-
-          codeql-db-
+          go-version-input: 1.20.6
+          go-package: ./...
 
 
     
