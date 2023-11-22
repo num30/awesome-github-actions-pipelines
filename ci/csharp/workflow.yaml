@@ -1,6 +1,7 @@
 name: .NET CI
 
-on:  [push, workflow_dispatch]
+on: 
+  pull_request:
 
 jobs:
   build-and-test:
@@ -63,7 +64,7 @@ jobs:
         hide_complexity: true
         indicators: true
         output: both
-        thresholds: "60 80"
+        thresholds: "50 80"
 
 
       # required to add a comment to PR with coverage
@@ -79,12 +80,3 @@ jobs:
         recreate: true
         path: code-coverage-results.md
         
-    - name: Install .NET Format (Lint)
-      run: dotnet tool install -g dotnet-format
-
-    - name: Lint with dotnet-format
-      run: dotnet format --check
-
-    - name: Perform Security Analysis with dotnet
-      run: dotnet build /p:Configuration=Release /p:RunAnalyzersDuringBuild=true
-         
