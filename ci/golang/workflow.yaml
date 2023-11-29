@@ -2,7 +2,7 @@ name: test-and-lint
 on: [push, workflow_dispatch]
 
 env:
-  GO_VERSION: 1.21
+  GO_VERSION: 1.21 #{version}
 
 jobs:
   test:

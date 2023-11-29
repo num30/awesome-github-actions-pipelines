@@ -19,7 +19,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '8.0.x' #{version}
 
     - name: Cache NuGet Packages
       uses: actions/cache@v3

@@ -12,10 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up JDK 13
+    - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '13'
+        java-version: '13' #{version}
         distribution: 'adopt'
 
     - name: Grant execute permission for gradlew
