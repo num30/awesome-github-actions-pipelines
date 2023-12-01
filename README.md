@@ -1,2 +1,2 @@
-# awesome-github-actions-pipelines
+# awesome-github-workflows
 Directory of github actions pipelines
